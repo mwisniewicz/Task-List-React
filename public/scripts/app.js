@@ -20,7 +20,7 @@ var MainApplication = function (_React$Component) {
         _this.handlePick = _this.handlePick.bind(_this);
         _this.handleAddTask = _this.handleAddTask.bind(_this);
         _this.state = {
-            tasks: ['Task1', 'Taks2', 'Task33']
+            tasks: props.tasks
         };
         return _this;
     }
@@ -85,6 +85,10 @@ var MainApplication = function (_React$Component) {
     return MainApplication;
 }(React.Component);
 
+MainApplication.defaultProps = {
+    tasks: ['sdsdsd']
+};
+
 var Header = function Header(props) {
     return React.createElement(
         'header',
@@ -100,6 +104,11 @@ var Header = function Header(props) {
             props.subtitle
         )
     );
+};
+
+Header.defaultProps = {
+    title: 'Some default title',
+    subtitle: 'Some default subtitle'
 };
 
 var Navigation = function Navigation(props) {

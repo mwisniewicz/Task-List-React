@@ -6,7 +6,7 @@ class MainApplication extends React.Component {
         this.handlePick = this.handlePick.bind(this);
         this.handleAddTask = this.handleAddTask.bind(this);
         this.state = {
-            tasks: ['Task1', 'Taks2', 'Task33']
+            tasks: props.tasks
         };
     }
 
@@ -62,6 +62,10 @@ class MainApplication extends React.Component {
     }
 }
 
+MainApplication.defaultProps = {
+    tasks: ['sdsdsd']
+};
+
 const Header = (props) => {
     return (
         <header>
@@ -69,6 +73,11 @@ const Header = (props) => {
             <h3>{props.subtitle}</h3>
         </header>
     );
+};
+
+Header.defaultProps = {
+    title: 'Some default title',
+    subtitle: 'Some default subtitle'
 };
 
 const Navigation = (props) => {
