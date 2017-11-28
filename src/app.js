@@ -3,6 +3,7 @@ class MainApplication extends React.Component {
     constructor(props) {
         super(props);
         this.handleDeleteTasks = this.handleDeleteTasks.bind(this);
+        this.handleDeleteTask = this.handleDeleteTask.bind(this);
         this.handlePick = this.handlePick.bind(this);
         this.handleAddTask = this.handleAddTask.bind(this);
         this.state = {
@@ -11,11 +12,16 @@ class MainApplication extends React.Component {
     }
 
     handleDeleteTasks() {
-        this.setState(() => {
-            return {
-                tasks: []
-            };
-        });
+
+        this.setState(() => ({ tasks: [] }));
+    }
+
+    handleDeleteTask(taskToRemove) {
+        this.setState((prevState) => ({
+            tasks: prevState.tasks.filter((task) => {
+                return taskToRemove !== task;
+            })
+        }));
     }
 
     handlePick() {
@@ -31,11 +37,7 @@ class MainApplication extends React.Component {
             return 'This task already exist';
         }
 
-        this.setState((prevState) => {
-            return {
-                tasks : prevState.tasks.concat(task)
-            };
-        });
+        this.setState((prevState) => ({ tasks: prevState.tasks.concat(task) }));
     }
 
     render() {
@@ -44,7 +46,7 @@ class MainApplication extends React.Component {
 
         return (
             <div>
-                <Header title={title} subtitle={subtitle}/>
+                <Header title={title} subtitle={subtitle} />
                 <Navigation />
                 <Action 
                     hasTasks={this.state.tasks.length > 0}
@@ -53,6 +55,7 @@ class MainApplication extends React.Component {
                 <Tasks 
                     tasks={this.state.tasks}
                     handleDeleteTasks={this.handleDeleteTasks}
+                    handleDeleteTask={this.handleDeleteTask}
                     />
                 <AddTask 
                     handleAddTask={this.handleAddTask}    
@@ -96,7 +99,9 @@ const Tasks = (props) => {
         <div>
         <button onClick={props.handleDeleteTasks}>Reset</button>
             {
-                props.tasks.map((task) => <Task key={task} taskText={task}/>)
+                props.tasks.map((task) => (
+                    <Task key={task} taskText={task} handleDeleteTask={props.handleDeleteTask}/>
+                ))
             }
         </div>
     );
@@ -106,6 +111,13 @@ const Task = (props) => {
     return (
         <div>
         {props.taskText}
+        <button 
+            onClick={(e) => {
+                props.handleDeleteTask(props.taskText);
+            }}
+            >
+            delete
+            </button>
         </div>
     );
 };
@@ -137,11 +149,7 @@ class AddTask extends React.Component {
         const task = e.target.elements.task.value.trim();
         const error = this.props.handleAddTask(task);
 
-        this.setState(() => {
-            return {
-                error: error
-            };
-        });
+        this.setState(() => ({error}));
     }
 
     render() {

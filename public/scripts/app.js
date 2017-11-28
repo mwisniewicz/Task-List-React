@@ -17,6 +17,7 @@ var MainApplication = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (MainApplication.__proto__ || Object.getPrototypeOf(MainApplication)).call(this, props));
 
         _this.handleDeleteTasks = _this.handleDeleteTasks.bind(_this);
+        _this.handleDeleteTask = _this.handleDeleteTask.bind(_this);
         _this.handlePick = _this.handlePick.bind(_this);
         _this.handleAddTask = _this.handleAddTask.bind(_this);
         _this.state = {
@@ -28,9 +29,19 @@ var MainApplication = function (_React$Component) {
     _createClass(MainApplication, [{
         key: 'handleDeleteTasks',
         value: function handleDeleteTasks() {
+
             this.setState(function () {
+                return { tasks: [] };
+            });
+        }
+    }, {
+        key: 'handleDeleteTask',
+        value: function handleDeleteTask(taskToRemove) {
+            this.setState(function (prevState) {
                 return {
-                    tasks: []
+                    tasks: prevState.tasks.filter(function (task) {
+                        return taskToRemove !== task;
+                    })
                 };
             });
         }
@@ -51,9 +62,7 @@ var MainApplication = function (_React$Component) {
             }
 
             this.setState(function (prevState) {
-                return {
-                    tasks: prevState.tasks.concat(task)
-                };
+                return { tasks: prevState.tasks.concat(task) };
             });
         }
     }, {
@@ -73,7 +82,8 @@ var MainApplication = function (_React$Component) {
                 }),
                 React.createElement(Tasks, {
                     tasks: this.state.tasks,
-                    handleDeleteTasks: this.handleDeleteTasks
+                    handleDeleteTasks: this.handleDeleteTasks,
+                    handleDeleteTask: this.handleDeleteTask
                 }),
                 React.createElement(AddTask, {
                     handleAddTask: this.handleAddTask
@@ -142,7 +152,7 @@ var Tasks = function Tasks(props) {
             'Reset'
         ),
         props.tasks.map(function (task) {
-            return React.createElement(Task, { key: task, taskText: task });
+            return React.createElement(Task, { key: task, taskText: task, handleDeleteTask: props.handleDeleteTask });
         })
     );
 };
@@ -151,7 +161,16 @@ var Task = function Task(props) {
     return React.createElement(
         'div',
         null,
-        props.taskText
+        props.taskText,
+        React.createElement(
+            'button',
+            {
+                onClick: function onClick(e) {
+                    props.handleDeleteTask(props.taskText);
+                }
+            },
+            'delete'
+        )
     );
 };
 
@@ -194,9 +213,7 @@ var AddTask = function (_React$Component2) {
             var error = this.props.handleAddTask(task);
 
             this.setState(function () {
-                return {
-                    error: error
-                };
+                return { error: error };
             });
         }
     }, {
