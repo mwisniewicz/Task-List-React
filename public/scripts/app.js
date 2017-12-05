@@ -25,8 +25,42 @@ var MainApplication = function (_React$Component) {
         };
         return _this;
     }
+    // method runs when component is mounted
+
 
     _createClass(MainApplication, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            try {
+                var json = localStorage.getItem('tasks');
+                var tasks = JSON.parse(json);
+                if (tasks) {
+                    this.setState(function () {
+                        return { tasks: tasks };
+                    });
+                }
+            } catch (e) {
+                // do nothing at all - catch for some errors
+            }
+        }
+        // method runs when component is updating
+
+    }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(prevProps, prevState) {
+
+            if (prevState.tasks.length !== this.state.tasks.length) {
+                console.log('Saving data');
+                var json = JSON.stringify(this.state.tasks);
+                localStorage.setItem('tasks', json);
+            }
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            console.log('comp will unmount');
+        }
+    }, {
         key: 'handleDeleteTasks',
         value: function handleDeleteTasks() {
 
@@ -151,6 +185,11 @@ var Tasks = function Tasks(props) {
             { onClick: props.handleDeleteTasks },
             'Reset'
         ),
+        props.tasks.length === 0 && React.createElement(
+            'p',
+            null,
+            'Please add task'
+        ),
         props.tasks.map(function (task) {
             return React.createElement(Task, { key: task, taskText: task, handleDeleteTask: props.handleDeleteTask });
         })
@@ -215,6 +254,11 @@ var AddTask = function (_React$Component2) {
             this.setState(function () {
                 return { error: error };
             });
+
+            if (!error) {
+
+                e.target.elements.task.value = '';
+            }
         }
     }, {
         key: 'render',

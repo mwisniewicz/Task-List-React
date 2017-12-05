@@ -10,6 +10,32 @@ class MainApplication extends React.Component {
             tasks: props.tasks
         };
     }
+    // method runs when component is mounted
+    componentDidMount() {
+        try {
+            const json = localStorage.getItem('tasks');
+            const tasks = JSON.parse(json);
+            if (tasks) {
+                this.setState(() => ({ tasks: tasks }))
+            }
+
+        } catch(e) {
+            // do nothing at all - catch for some errors
+        }
+    }
+    // method runs when component is updating
+    componentDidUpdate(prevProps,prevState) {
+        
+        if (prevState.tasks.length !== this.state.tasks.length) {
+            console.log('Saving data');
+            const json = JSON.stringify(this.state.tasks);
+            localStorage.setItem('tasks', json);
+        }
+    }
+
+    componentWillUnmount() {
+        console.log('comp will unmount');
+    }
 
     handleDeleteTasks() {
 
@@ -97,7 +123,9 @@ const Navigation = (props) => {
 const Tasks = (props) => {
     return (
         <div>
+        
         <button onClick={props.handleDeleteTasks}>Reset</button>
+        {props.tasks.length === 0 && <p>Please add task</p>}
             {
                 props.tasks.map((task) => (
                     <Task key={task} taskText={task} handleDeleteTask={props.handleDeleteTask}/>
@@ -148,8 +176,13 @@ class AddTask extends React.Component {
 
         const task = e.target.elements.task.value.trim();
         const error = this.props.handleAddTask(task);
-
+        
         this.setState(() => ({error}));
+
+        if(!error) {
+            
+            e.target.elements.task.value = '';
+        }
     }
 
     render() {
