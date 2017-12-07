@@ -1,5 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import MainApplication from './components/MainApplication';
 
-const template = <p>Tested JSX</p>;
-ReactDOM.render(template,document.getElementById('app'));
+ReactDOM.render(<MainApplication />, document.getElementById('app'));

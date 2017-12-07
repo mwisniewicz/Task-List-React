@@ -983,14 +983,13 @@ var _reactDom = __webpack_require__(84);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
+var _MainApplication = __webpack_require__(104);
+
+var _MainApplication2 = _interopRequireDefault(_MainApplication);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var template = _react2.default.createElement(
-  'p',
-  null,
-  'Tested JSX'
-);
-_reactDom2.default.render(template, document.getElementById('app'));
+_reactDom2.default.render(_react2.default.createElement(_MainApplication2.default, null), document.getElementById('app'));
 
 /***/ }),
 /* 32 */,
@@ -21240,6 +21239,460 @@ module.exports = function() {
   return ReactPropTypes;
 };
 
+
+/***/ }),
+/* 98 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(11);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var AddTask = function (_React$Component) {
+    _inherits(AddTask, _React$Component);
+
+    function AddTask(props) {
+        _classCallCheck(this, AddTask);
+
+        var _this = _possibleConstructorReturn(this, (AddTask.__proto__ || Object.getPrototypeOf(AddTask)).call(this, props));
+
+        _this.handleAddTask = _this.handleAddTask.bind(_this);
+        _this.state = {
+            error: undefined
+        };
+        return _this;
+    }
+
+    _createClass(AddTask, [{
+        key: 'handleAddTask',
+        value: function handleAddTask(e) {
+            e.preventDefault();
+
+            var task = e.target.elements.task.value.trim();
+            var error = this.props.handleAddTask(task);
+
+            this.setState(function () {
+                return { error: error };
+            });
+
+            if (!error) {
+
+                e.target.elements.task.value = '';
+            }
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                null,
+                this.state.error && _react2.default.createElement(
+                    'p',
+                    null,
+                    this.state.error
+                ),
+                _react2.default.createElement(
+                    'form',
+                    { onSubmit: this.handleAddTask },
+                    _react2.default.createElement('input', { type: 'text', name: 'task' }),
+                    _react2.default.createElement(
+                        'button',
+                        null,
+                        'Add task'
+                    )
+                )
+            );
+        }
+    }]);
+
+    return AddTask;
+}(_react2.default.Component);
+
+exports.default = AddTask;
+
+/***/ }),
+/* 99 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(11);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Task = function Task(props) {
+    return _react2.default.createElement(
+        'div',
+        null,
+        props.taskText,
+        _react2.default.createElement(
+            'button',
+            {
+                onClick: function onClick(e) {
+                    props.handleDeleteTask(props.taskText);
+                }
+            },
+            'delete'
+        )
+    );
+};
+
+exports.default = Task;
+
+/***/ }),
+/* 100 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(11);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Header = function Header(props) {
+    return _react2.default.createElement(
+        'header',
+        null,
+        _react2.default.createElement(
+            'h1',
+            null,
+            props.title
+        ),
+        _react2.default.createElement(
+            'h3',
+            null,
+            props.subtitle
+        )
+    );
+};
+
+Header.defaultProps = {
+    title: 'Some default title',
+    subtitle: 'Some default subtitle'
+};
+
+exports.default = Header;
+
+/***/ }),
+/* 101 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(11);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Action = function Action(props) {
+    return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+            'button',
+            {
+                onClick: props.handlePick,
+                disabled: !props.hasTasks
+            },
+            'What I should do?'
+        )
+    );
+};
+
+exports.default = Action;
+
+/***/ }),
+/* 102 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(11);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Navigation = function Navigation(props) {
+    return _react2.default.createElement(
+        'nav',
+        null,
+        _react2.default.createElement(
+            'ul',
+            null,
+            _react2.default.createElement(
+                'li',
+                null,
+                'Home'
+            ),
+            _react2.default.createElement(
+                'li',
+                null,
+                'Contact'
+            )
+        )
+    );
+};
+
+exports.default = Navigation;
+
+/***/ }),
+/* 103 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(11);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _task = __webpack_require__(99);
+
+var _task2 = _interopRequireDefault(_task);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Tasks = function Tasks(props) {
+    return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+            'button',
+            { onClick: props.handleDeleteTasks },
+            'Reset'
+        ),
+        props.tasks.length === 0 && _react2.default.createElement(
+            'p',
+            null,
+            'Please add task'
+        ),
+        props.tasks.map(function (task) {
+            return _react2.default.createElement(_task2.default, { key: task, taskText: task, handleDeleteTask: props.handleDeleteTask });
+        })
+    );
+};
+
+exports.default = Tasks;
+
+/***/ }),
+/* 104 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(11);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _addTask = __webpack_require__(98);
+
+var _addTask2 = _interopRequireDefault(_addTask);
+
+var _header = __webpack_require__(100);
+
+var _header2 = _interopRequireDefault(_header);
+
+var _action = __webpack_require__(101);
+
+var _action2 = _interopRequireDefault(_action);
+
+var _navigation = __webpack_require__(102);
+
+var _navigation2 = _interopRequireDefault(_navigation);
+
+var _tasks = __webpack_require__(103);
+
+var _tasks2 = _interopRequireDefault(_tasks);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var MainApplication = function (_React$Component) {
+    _inherits(MainApplication, _React$Component);
+
+    function MainApplication(props) {
+        _classCallCheck(this, MainApplication);
+
+        var _this = _possibleConstructorReturn(this, (MainApplication.__proto__ || Object.getPrototypeOf(MainApplication)).call(this, props));
+
+        _this.handleDeleteTasks = _this.handleDeleteTasks.bind(_this);
+        _this.handleDeleteTask = _this.handleDeleteTask.bind(_this);
+        _this.handlePick = _this.handlePick.bind(_this);
+        _this.handleAddTask = _this.handleAddTask.bind(_this);
+        _this.state = {
+            tasks: props.tasks
+        };
+        return _this;
+    }
+    // method runs when component is mounted
+
+
+    _createClass(MainApplication, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            try {
+                var json = localStorage.getItem('tasks');
+                var tasks = JSON.parse(json);
+                if (tasks) {
+                    this.setState(function () {
+                        return { tasks: tasks };
+                    });
+                }
+            } catch (e) {
+                // do nothing at all - catch for some errors
+            }
+        }
+        // method runs when component is updating
+
+    }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(prevProps, prevState) {
+
+            if (prevState.tasks.length !== this.state.tasks.length) {
+                console.log('Saving data');
+                var json = JSON.stringify(this.state.tasks);
+                localStorage.setItem('tasks', json);
+            }
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            console.log('comp will unmount');
+        }
+    }, {
+        key: 'handleDeleteTasks',
+        value: function handleDeleteTasks() {
+
+            this.setState(function () {
+                return { tasks: [] };
+            });
+        }
+    }, {
+        key: 'handleDeleteTask',
+        value: function handleDeleteTask(taskToRemove) {
+            this.setState(function (prevState) {
+                return {
+                    tasks: prevState.tasks.filter(function (task) {
+                        return taskToRemove !== task;
+                    })
+                };
+            });
+        }
+    }, {
+        key: 'handlePick',
+        value: function handlePick() {
+            var randomNumber = Math.floor(Math.random() * this.state.tasks.length);
+            var task = this.state.tasks[randomNumber];
+            alert(task);
+        }
+    }, {
+        key: 'handleAddTask',
+        value: function handleAddTask(task) {
+            if (!task) {
+                return 'Enter valid value';
+            } else if (this.state.tasks.indexOf(task) > -1) {
+                return 'This task already exist';
+            }
+
+            this.setState(function (prevState) {
+                return { tasks: prevState.tasks.concat(task) };
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var title = "React Task Manager";
+            var subtitle = "by MW";
+
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(_header2.default, { title: title, subtitle: subtitle }),
+                _react2.default.createElement(_navigation2.default, null),
+                _react2.default.createElement(_action2.default, {
+                    hasTasks: this.state.tasks.length > 0,
+                    handlePick: this.handlePick
+                }),
+                _react2.default.createElement(_tasks2.default, {
+                    tasks: this.state.tasks,
+                    handleDeleteTasks: this.handleDeleteTasks,
+                    handleDeleteTask: this.handleDeleteTask
+                }),
+                _react2.default.createElement(_addTask2.default, {
+                    handleAddTask: this.handleAddTask
+                })
+            );
+        }
+    }]);
+
+    return MainApplication;
+}(_react2.default.Component);
+
+exports.default = MainApplication;
+
+
+MainApplication.defaultProps = {
+    tasks: ['sdsdsd']
+};
 
 /***/ })
 /******/ ]);
